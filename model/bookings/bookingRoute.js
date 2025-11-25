@@ -1,0 +1,12 @@
+// let bookingCollection=require("./bookingModel");
+//let userCollection=require("../user/userModel");
+let {bookingControllerPost,bookingControllerGet,bookingControllerCancel,bookingControllerGetByeventId}=require("./bookingController");
+let express=require("express");
+let app=express();
+let router=express.Router();
+app.use(express.json());
+router.post("/post/bookings",bookingControllerPost);
+router.get("/get/bookings",bookingControllerGet);
+router.delete("/bookings/:id/cancel",bookingControllerCancel);
+router.get("/events/:eventId/bookings",bookingControllerGetByeventId);   
+module.exports=router;
