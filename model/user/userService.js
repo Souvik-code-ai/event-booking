@@ -15,11 +15,13 @@ async function findEmail(userData){
     console.log(userData);
     const emailAddress=userData.emailForOtp.toLowerCase();
     userData.emailForOtp=emailAddress;
-    const matchedEmail=userCollection.findOne({email:emailAddress});
+    const matchedEmail=await userCollection.findOne({email:emailAddress});
     if(!matchedEmail){
         const generatedotp=Math.floor(100000+Math.random()*900000);
         console.log(generatedotp);
         userData.otp=generatedotp;
+        userCollection.email=userData.emailForOtp;
+        await userCollection.save();
         return await emailSchema.create(userData);
     }
     else if(matchedEmail){
@@ -32,14 +34,14 @@ async function findEmail(userData){
 }
 async function otpVerify(userData){
    // console.log(userData);
-    const otpMatched=await emailSchema.findOne({otp:userData.otp}) ;    
-    console.log(otpMatched);
-    if(!otpMatched){
+    const user=await emailSchema.findOne({emailForOtp:userData.email}) ;    
+    console.log(user);
+
+    if(user.otp!==userData.otp){
         return {error:true,status:404,message:"wrong Otp"};
     }
-    if(otpMatched.otp===userData.otp){
-        return {success:true,status:200,message:"Otp verifiaction successful"};
-    }
+    return {success:true,status:200,message:"Otp verifiaction successful"};
+    
     // if(otpMatched.otp!==userData.otp){
     //     console.log("bdjbjb");
     //     return {error:true,status:404,message:"wrong Otp"};
