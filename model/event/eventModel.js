@@ -1,5 +1,5 @@
-let mongoose =require("mongoose");
-let eventSchema=mongoose.Schema({
+const mongoose =require("mongoose");
+const eventSchema=mongoose.Schema({
     "title":{type:String,required:true},
     "description":{type:String,required:true},
     "venue":{
@@ -18,5 +18,5 @@ let eventSchema=mongoose.Schema({
     "status":{type:String,enum:["active","cancelled","expired"]},
     "createdAt":{type:Date}
 });
-let event=mongoose.model("Event",eventSchema);
+const event=mongoose.model("Event",eventSchema);
 module.exports=event;

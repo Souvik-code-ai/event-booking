@@ -1,9 +1,9 @@
 const { createBookingService, getBookingService,cancelBookingService,getBookingCollectionByeventId} = require("./bookingService");
 //let userCollection = require("../user/userController");
-let userSchema=require("../user/userModel");
-let eventSchema=require("../event/eventModel");
+const userSchema=require("../user/userModel");
+const eventSchema=require("../event/eventModel");
 //let eventCollection = require("../event/eventController");
-let bookingCollection = require("./bookingModel");
+const bookingCollection = require("./bookingModel");
 //let bookingCollection=require("./bookingModel");
 async function bookingControllerPost(req, res) {
     try {
@@ -11,12 +11,12 @@ async function bookingControllerPost(req, res) {
         const {eventId,userId}=req.body;
         console.log(eventId);
         //console.log(req.body);
-        let userData=req.body;
+        const userData=req.body;
         // req.body.organizers=matchRole._id;
         //req.body.availableSeats=req.body.totalSeats;
         // req.body.userId = userSchema._id;
         // req.body.eventId = eventSchema._id;
-        let data = await createBookingService(eventId,userId,userData);
+        const data = await createBookingService(eventId,userId,userData);
         if (!data) {
             res.status(404).json({ message: "data not found." });
         }
@@ -29,7 +29,7 @@ async function bookingControllerPost(req, res) {
 }
 async function bookingControllerGet(req, res) {
     try {
-        let dataAchieved = await getBookingService({});
+        const dataAchieved = await getBookingService({});
         if (!dataAchieved) {
             res.status(404).json({ message: "data not found." });
         }
@@ -41,8 +41,8 @@ async function bookingControllerGet(req, res) {
 }
 async function bookingControllerCancel(req, res) {
     try {
-        let userParams=req.params;
-        let dataAchieved = await cancelBookingService(userParams);
+        const userParams=req.params;
+        const dataAchieved = await cancelBookingService(userParams);
         if (!dataAchieved) {
             res.status(404).json({ message: "data not found." });
         }
@@ -54,8 +54,8 @@ async function bookingControllerCancel(req, res) {
 }
 async function bookingControllerGetByeventId(req, res) {
     try {
-        let userParams=req.params;
-        let dataAchieved = await getBookingCollectionByeventId(userParams);
+        const userParams=req.params;
+        const dataAchieved = await getBookingCollectionByeventId(userParams);
         if (!dataAchieved) {
             res.status(404).json({ message: "data not found." });
         }

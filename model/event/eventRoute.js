@@ -1,9 +1,9 @@
 //let eventCollection=require("./eventModel");
 // let userCollection=require("../user/userModel");
-let express=require("express");
-let app=express();
-let router=express.Router();
-let {eventControllerPost,eventControllerGet, eventControllerGetData}=require("./eventController");
+const express=require("express");
+const app=express();
+const router=express.Router();
+const {eventControllerPost,eventControllerGet, eventControllerGetData}=require("./eventController");
 app.use(express.json());
 router.post("/post/events",eventControllerPost);
 router.get("/getdata/events",eventControllerGetData)

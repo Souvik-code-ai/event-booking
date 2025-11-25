@@ -14,7 +14,7 @@ async function getUsersService() {
 async function findEmail(userData){
     console.log(userData);
     const emailAddress=userData.emailForOtp.toLowerCase();
-    let matchedEmail=userCollection.findOne({email:emailAddress});
+    const matchedEmail=userCollection.findOne({email:emailAddress});
     if(!matchedEmail){
         const generatedotp=Math.floor(100000+Math.random()*900000);
         console.log(generatedotp);
@@ -45,11 +45,11 @@ async function otpVerify(userData){
     // }
 }
 async function getUsersServiceById(usersId){
-    let userIdOfBooking=await bookingSchema.find({userId:usersId.id});
+    const userIdOfBooking=await bookingSchema.find({userId:usersId.id});
     console.log(userIdOfBooking);
-    let eventIdOfBooking=userIdOfBooking.map(u=>u.eventId);
+    const eventIdOfBooking=userIdOfBooking.map(u=>u.eventId);
     console.log(eventIdOfBooking);
-    let bookingSummary=await eventSchema.find({_id:{$in:eventIdOfBooking}});
+    const bookingSummary=await eventSchema.find({_id:{$in:eventIdOfBooking}});
     return bookingSummary;
 
 }

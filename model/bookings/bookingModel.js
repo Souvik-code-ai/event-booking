@@ -1,7 +1,7 @@
-let mongoose=require("mongoose");
+const mongoose=require("mongoose");
 // let event=require("../event/eventModel");
 // let user=require("../user/userModel");
-let bookingSchema=mongoose.Schema({
+const bookingSchema=mongoose.Schema({
     "eventId":{type:String,required:true},
     "userId":{type:String,required:true},
     "seats":{type:Number,required:true},
@@ -10,5 +10,5 @@ let bookingSchema=mongoose.Schema({
     "bookedAt":{type:Date},
     "cancelledAt":{type:Date,default:null}
 });
-let booking=mongoose.model("Booking",bookingSchema);
+const booking=mongoose.model("Booking",bookingSchema);
 module.exports=booking;

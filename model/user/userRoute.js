@@ -1,7 +1,7 @@
-let express=require("express");
-let app=express();
-let router=express.Router();
-let {userControllerPost,userControllerGet, userControllerGetById, genertateOtp,verifyOtp}=require("./userController");
+const express=require("express");
+const app=express();
+const router=express.Router();
+const {userControllerPost,userControllerGet, userControllerGetById, genertateOtp,verifyOtp}=require("./userController");
 
 app.use(express.json());
 router.post("/post/users",userControllerPost);

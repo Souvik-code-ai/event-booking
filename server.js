@@ -1,10 +1,10 @@
-let express=require("express");
-let port=500;
-let user=require("./model/user/userRoute");
-let event=require("./model/event/eventRoute");
-let booking=require("./model/bookings/bookingRoute");
-let database=require("./dbConnection");
-let app=express();
+const express=require("express");
+const port=500;
+const user=require("./model/user/userRoute");
+const event=require("./model/event/eventRoute");
+const booking=require("./model/bookings/bookingRoute");
+const database=require("./dbConnection");
+const app=express();
 app.use(express.json());
 app.use("/api",user);
 app.use("/api",event);

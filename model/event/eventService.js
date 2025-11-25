@@ -1,5 +1,5 @@
-let eventCollection=require("./eventModel");
-let userCollection=require("../user/userModel");
+const eventCollection=require("./eventModel");
+const userCollection=require("../user/userModel");
 async function filterEventService(userData){
     return await userCollection.find(userData);
 }

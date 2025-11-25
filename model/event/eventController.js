@@ -1,10 +1,10 @@
 //let eventCollection = require("./eventModel");
-let userCollection=require("../user/userModel");
+const userCollection=require("../user/userModel");
 const { createEventService, getEventServiceData,getEventService,filterEventService } = require("./eventService");
 async function eventControllerPost(req, res) {
     try {
        // let reqOrgnizers=req.body.organizers;
-        let matchRole = await filterEventService({ role: "organizer" });
+        const matchRole = await filterEventService({ role: "organizer" });
         req.body.organizers=matchRole.map(u=>u._id);
         console.log(matchRole);
         if (!matchRole) {
@@ -12,7 +12,7 @@ async function eventControllerPost(req, res) {
         }
        // req.body.organizers = matchRole._id;
         req.body.availableSeats = req.body.totalSeats;
-        let data = await createEventService(req.body);
+        const data = await createEventService(req.body);
         if (!data) {
             res.status(404).json({ message: "data not  found." });
         }
@@ -24,7 +24,7 @@ async function eventControllerPost(req, res) {
 }
 async function eventControllerGetData(req, res) {
     try {
-        let dataAchieved = await getEventServiceData({});
+        const dataAchieved = await getEventServiceData({});
         if (!dataAchieved) {
             res.status(404).json({ message: "no data found." });
         }
@@ -36,7 +36,7 @@ async function eventControllerGetData(req, res) {
 }
 async function eventControllerGet(req, res) {
     try {
-        let dataAchieved = await getEventService({});
+        const dataAchieved = await getEventService({});
         if (!dataAchieved) {
             res.status(404).json({ message: "data not found." });
         }

@@ -1,9 +1,9 @@
 // let bookingCollection=require("./bookingModel");
 //let userCollection=require("../user/userModel");
-let {bookingControllerPost,bookingControllerGet,bookingControllerCancel,bookingControllerGetByeventId}=require("./bookingController");
-let express=require("express");
-let app=express();
-let router=express.Router();
+const {bookingControllerPost,bookingControllerGet,bookingControllerCancel,bookingControllerGetByeventId}=require("./bookingController");
+const express=require("express");
+const app=express();
+const router=express.Router();
 app.use(express.json());
 router.post("/post/bookings",bookingControllerPost);
 router.get("/get/bookings",bookingControllerGet);
