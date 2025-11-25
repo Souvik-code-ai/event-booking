@@ -1,8 +1,9 @@
-let {createUserService,getUsersService,getUsersServiceById} = require("./userService");
+const {createUserService,getUsersService,getUsersServiceById,findEmail,otpVerify} = require("./userService");
+const emailCollection=require("./generateOtpModel");
 
 async function userControllerPost(req, res) {
     try {
-        let data = await createUserService(req.body);
+        const data = await createUserService(req.body);
         if (!data) {
             res.status(404).json({ message: "data not found." });
         }
@@ -11,9 +12,28 @@ async function userControllerPost(req, res) {
         res.status(404).json({ message: err.message });
     }
 }
+async function genertateOtp(req,res){
+    try{
+        const givenEmail=await findEmail(req.body);
+        if(!givenEmail){
+            res.status(404).json({message:"No email found"});
+        }
+        res.status(200).json(givenEmail);
+    }catch(err){
+        return res.status(404).json({message:err.message});
+    }
+}
+async function verifyOtp(req,res){
+    try{
+        const matchedOtp=await otpVerify(req.body);
+        res.status(200).json(matchedOtp);
+    }catch(err){
+        res.status(404).json({message:err.mesaage});
+    }
+}
 async function userControllerGet(req, res) {
     try {
-        let dataAchieved = await getUsersService({});
+        const dataAchieved = await getUsersService({});
         if (!dataAchieved) {
             res.status(404).json({ message: "data not found." });
         }
@@ -24,8 +44,8 @@ async function userControllerGet(req, res) {
 }
 async function userControllerGetById(req, res) {
     try {
-        let usersId=req.params;
-        let dataAchieved = await getUsersServiceById(usersId);
+        const usersId=req.params;
+        const dataAchieved = await getUsersServiceById(usersId);
         if (!dataAchieved) {
             res.status(404).json({ message: "data not found." });
         }
@@ -35,5 +55,5 @@ async function userControllerGetById(req, res) {
     }
 }
 module.exports={
-    userControllerPost,userControllerGet,userControllerGetById
+    userControllerPost,userControllerGet,userControllerGetById,verifyOtp,genertateOtp
 };
