@@ -14,6 +14,7 @@ async function getUsersService() {
 async function findEmail(userData){
     console.log(userData);
     const emailAddress=userData.emailForOtp.toLowerCase();
+    userData.emailForOtp=emailAddress;
     const matchedEmail=userCollection.findOne({email:emailAddress});
     if(!matchedEmail){
         const generatedotp=Math.floor(100000+Math.random()*900000);
