@@ -49,3 +49,8 @@ async function eventControllerGet(req, res) {
 module.exports={
     eventControllerPost,eventControllerGetData,eventControllerGet
 };
+// async function expireEvents(req,res){
+//     try{
+//         const expiredEvent=await expireEventByDate
+//     }
+// }

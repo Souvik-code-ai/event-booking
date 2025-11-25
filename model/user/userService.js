@@ -20,21 +20,21 @@ async function findEmail(userData){
         const generatedotp=Math.floor(100000+Math.random()*900000);
         console.log(generatedotp);
         userData.otp=generatedotp;
-        userCollection.email=userData.emailForOtp;
-        await userCollection.save();
+       // userCollection.email=userData.emailForOtp;
+        await userCollection.create({email: userData.emailForOtp});
         return await emailSchema.create(userData);
     }
     else if(matchedEmail){
         const generatedotp=Math.floor(100000+Math.random()*900000);
         userData.otp=generatedotp;
-        const {otp}=userData;
+
         return await emailSchema.create(userData);
     }
 
 }
 async function otpVerify(userData){
    // console.log(userData);
-    const user=await emailSchema.findOne({emailForOtp:userData.email}) ;    
+    const user=await emailSchema.findOne({emailForOtp:userData.emailForVerify}).sort({_id:-1});    
     console.log(user);
 
     if(user.otp!==userData.otp){
