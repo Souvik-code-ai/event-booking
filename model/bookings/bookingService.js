@@ -61,11 +61,13 @@ async function cancelBookingService(userParams){
     console.log(matchRole.role);
     if(matchRole.role==="user"){
         const deletedBooking=await bookingCollection.findByIdAndDelete(matchedId._id);
+        console.log("deleted",deletedBooking);
         return deletedBooking;
 
     }
     else if(matchRole.role==="organizer"){
-        const deletedBooking=await eventSchema.findOne({organizers:matchRole._id})
+        const deletedBooking=await eventSchema.findOne({organizers:matchRole._id});
+        console.log("deleted",deleteBooking);
         const deleted_booking=await bookingCollection.find({userId:deletedBooking.organizers});
         const deleteBooking=await bookingCollection.findByIdAndDelete(deleted_booking._id);
         eventSchema.availableSeats+=bookingCollection.seats;

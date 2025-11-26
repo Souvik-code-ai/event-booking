@@ -3,7 +3,7 @@ const userSchema=mongoose.Schema({
     "name":{type:String,required:false},
     "email":{type:String,unique:true,required:true},
     "phone":{type:Number,unique:true,required:false},
-    "role":{type:String,enum:["user","organizer","admin"],required:false},
+    "role":{type:String,enum:["user","organizer","admin"],required:true,default:"user"},
     "createdAt":{type:Date,default:Date.now()}
 });
 // const otpSchema=mongoose.Schema({

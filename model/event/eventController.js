@@ -1,26 +1,28 @@
 //let eventCollection = require("./eventModel");
-const userCollection=require("../user/userModel");
-const { createEventService, getEventServiceData,getEventService,filterEventService } = require("./eventService");
-async function eventControllerPost(req, res) {
+const { extractJwt } = require("../user/userController")
+const userCollection = require("../user/userModel");
+const { verifyJwtToken } = require("../user/verifyJwtToken");
+const { getEventServiceData, getEventService, eventControllerPost } = require("./eventService");
+async function eventPost(req, res) {
     try {
-       // let reqOrgnizers=req.body.organizers;
-        const matchRole = await filterEventService({ role: "organizer" });
-        req.body.organizers=matchRole.map(u=>u._id);
-        console.log(matchRole);
-        if (!matchRole) {
-            return res.status(404).json({ message: "No organizer found." });
+        console.log("middleware",req.user);
+        if (req.user.header_role !== "organizer" && req.user.header_role !== "admin") {
+            res.status(404).json("Role of user is not authorized.");
+
         }
-       // req.body.organizers = matchRole._id;
-        req.body.availableSeats = req.body.totalSeats;
-        const data = await createEventService(req.body);
-        if (!data) {
-            res.status(404).json({ message: "data not  found." });
+        req.body.organizer=req.user.header_id;
+        const dataPost = await eventControllerPost(req.body);
+        if (!dataPost) {
+            res.status(404).json("Data not found");
         }
-        res.status(200).json(data);
-        console.log(data);
+        res.status(200).json(dataPost);
+
+
     } catch (err) {
-        res.status(404).json({ message: err.message });
+        console.log(err.message);
     }
+
+
 }
 async function eventControllerGetData(req, res) {
     try {
@@ -46,11 +48,13 @@ async function eventControllerGet(req, res) {
         res.status(404).json({ message: err.message });
     }
 }
-module.exports={
-    eventControllerPost,eventControllerGetData,eventControllerGet
+module.exports = {
+    eventControllerPost, eventControllerGetData, eventControllerGet, eventPost
 };
-// async function expireEvents(req,res){
-//     try{
-//         const expiredEvent=await expireEventByDate
-//     }
-// }
+async function expireEvents(req, res) {
+    try {
+        const expiredEvent = await expireEventByDate()
+    } catch (err) {
+
+    }
+}

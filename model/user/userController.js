@@ -1,6 +1,8 @@
-const {createUserService,getUsersService,getUsersServiceById,findEmail,otpVerify} = require("./userService");
-const emailCollection=require("./generateOtpModel");
+const { createUserService, getUsersService, getUsersServiceById, findEmail, otpVerify } = require("./userService");
+const emailCollection = require("./generateOtpModel");
+const jwt=require("jsonwebtoken");
 
+require("dotenv").config();
 async function userControllerPost(req, res) {
     try {
         const data = await createUserService(req.body);
@@ -12,23 +14,24 @@ async function userControllerPost(req, res) {
         res.status(404).json({ message: err.message });
     }
 }
-async function genertateOtp(req,res){
-    try{
-        const givenEmail=await findEmail(req.body);
-        if(!givenEmail){
-            res.status(404).json({message:"No email found"});
+async function genertateOtp(req, res) {
+    try {
+        const givenEmail = await findEmail(req.body);
+        console.log("given email",givenEmail)
+        if (!givenEmail) {
+            res.status(404).json({ message: "No email found" });
         }
         res.status(200).json(givenEmail);
-    }catch(err){
-        return res.status(404).json({message:err.message});
+    } catch (err) {
+        return res.status(404).json({ message: err.message });
     }
 }
-async function verifyOtp(req,res){
-    try{
-        const matchedOtp=await otpVerify(req.body);
+async function verifyOtp(req, res) {
+    try {
+        const matchedOtp = await otpVerify(req.body);
         res.status(200).json(matchedOtp);
-    }catch(err){
-        res.status(404).json({message:err.mesaage});
+    } catch (err) {
+        res.status(200).json({ message: err.mesaage });
     }
 }
 async function userControllerGet(req, res) {
@@ -44,7 +47,7 @@ async function userControllerGet(req, res) {
 }
 async function userControllerGetById(req, res) {
     try {
-        const usersId=req.params;
+        const usersId = req.params;
         const dataAchieved = await getUsersServiceById(usersId);
         if (!dataAchieved) {
             res.status(404).json({ message: "data not found." });
@@ -54,6 +57,7 @@ async function userControllerGetById(req, res) {
         res.status(404).json({ message: err.message });
     }
 }
-module.exports={
-    userControllerPost,userControllerGet,userControllerGetById,verifyOtp,genertateOtp
+
+module.exports = {
+    userControllerPost, userControllerGet, userControllerGetById, verifyOtp, genertateOtp
 };

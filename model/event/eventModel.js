@@ -14,9 +14,11 @@ const eventSchema=mongoose.Schema({
     "totalSeats":Number,
     "availableSeats":Number,
     "pricePerSeat":Number,
-    "organizers":Array,
+    "organizer":{type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+    },
     "status":{type:String,enum:["active","cancelled","expired"]},
-    "createdAt":{type:Date}
+    "createdAt":{type:Date,default:Date.now()}
 });
 const event=mongoose.model("Event",eventSchema);
 module.exports=event;
